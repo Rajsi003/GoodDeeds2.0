@@ -48,7 +48,9 @@ This isn’t just a project—it’s a vision for a **kinder internet**. One whe
 
 ---
 
-## 📁 Project Structure:
+## 📁 Project Structure
+
+```bash
 GoodDeeds2.0/
 ├── public/
 │   └── vite.svg
