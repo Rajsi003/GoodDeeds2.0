@@ -24,7 +24,7 @@ const Chat = () => {
     };
     try {
       const response = await fetch(
-        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyC-bUxVoyBBUzhpDIDLZLO3QFwssQhwkd4',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=API',
         requestOptions
       );
       const data = await response.json();
