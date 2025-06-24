@@ -101,13 +101,16 @@ GoodDeeds2.0/
 ├── package.json
 ├── tsconfig.json
 ├── vite.config.ts
+```
 
 
 
 ---
 
 ## ▶️ Try It Out:
+```
 npm run dev
+```
 
 
 
