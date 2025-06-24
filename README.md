@@ -1,4 +1,4 @@
-# 📘 GoodDeeds2.0 – A Social Platform That Celebrates Kindness
+# 🤝 GoodDeeds2.0 – A Social Platform That Celebrates Kindness
 
 Presenting one of my first personal projects, this one started with a simple thought:  
 > **What if social media rewarded value—not virality?**
