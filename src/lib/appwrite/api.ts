@@ -335,12 +335,17 @@ export async function createPost(post: INewPost) {
 
 
 // ============================== UPLOAD FILE
+import { Permission, Role } from "appwrite";
+
 export async function uploadFile(file: File) {
   try {
     const uploadedFile = await storage.createFile(
       appwriteConfig.storageId,
       ID.unique(),
-      file
+      file,
+      [
+        Permission.read(Role.any()),  // ✅ This makes the image publicly viewable
+      ]
     );
 
     return uploadedFile;

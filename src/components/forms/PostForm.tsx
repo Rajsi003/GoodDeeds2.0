@@ -638,7 +638,11 @@ const PostForm = ({ post, action }: PostFormProps) => {
                 <FormControl>
                   <FileUploader
                     fieldChange={field.onChange}
-                    mediaUrl={post?.imageUrl}
+                    mediaUrl={
+                      post?.imageId
+                        ? `https://cloud.appwrite.io/v1/storage/buckets/6782e52f0035d9eb5fc4/files/${post.imageId}/view?project=6782604b00207ffe0075`
+                        : undefined
+                    }
                   />
                 </FormControl>
                 <FormMessage className="shad-form_message" />
@@ -695,9 +699,10 @@ const PostForm = ({ post, action }: PostFormProps) => {
                 <Button
                   type="button"
                   className="shad-button whitespace-nowrap text-lg underline"
-                  style={{ color: "#877EFF"}}
+                  style={{ color: "#877EFF" }}
                   onClick={() => setShowInstructions(true)}
-                >Instructions for posting
+                >
+                  Instructions for posting
                 </Button>
                 {/* </div> */}
               </label>

@@ -1,7 +1,7 @@
 import { Models } from "appwrite";
 import { Link } from "react-router-dom";
 
-import  PostStats  from "../shared/PostStats";
+import PostStats from "../shared/PostStats";
 import { useUserContext } from "@/context/AuthContext";
 
 type GridPostListProps = {
@@ -23,9 +23,16 @@ const GridPostList = ({
         <li key={post.$id} className="relative min-w-80 h-80">
           <Link to={`/posts/${post.$id}`} className="grid-post_link">
             <img
-              src={post.imageUrl}
+              src={
+                post.imageId
+                  ? `https://cloud.appwrite.io/v1/storage/buckets/6782e52f0035d9eb5fc4/files/${post.imageId}/view?project=6782604b00207ffe0075`
+                  : "/assets/icons/profile-placeholder.svg"
+              }
               alt="post"
               className="h-full w-full object-cover"
+              onError={(e) => {
+                e.currentTarget.src = "/assets/icons/profile-placeholder.svg";
+              }}
             />
           </Link>
 
@@ -34,12 +41,18 @@ const GridPostList = ({
               <div className="flex items-center justify-start gap-2 flex-1">
                 <img
                   src={
-                    post.creator.imageUrl ||
-                    "/assets/icons/profile-placeholder.svg"
+                    post.creator.imageId
+                      ? `https://cloud.appwrite.io/v1/storage/buckets/6782e52f0035d9eb5fc4/files/${post.creator.imageId}/view?project=6782604b00207ffe0075`
+                      : "/assets/icons/profile-placeholder.svg"
                   }
                   alt="creator"
-                  className="w-8 h-8 rounded-full"
+                  className="w-8 h-8 rounded-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src =
+                      "/assets/icons/profile-placeholder.svg";
+                  }}
                 />
+
                 <p className="line-clamp-1">{post.creator.name}</p>
               </div>
             )}

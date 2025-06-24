@@ -7,14 +7,14 @@ import {
   useLocation,
 } from "react-router-dom";
 
-import { FaCoins } from 'react-icons/fa'; 
+import { FaCoins } from "react-icons/fa";
 
 import { Button } from "../../components/ui/button";
-import  LikedPosts  from "../pages/LikedPosts";
+import LikedPosts from "../pages/LikedPosts";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById } from "@/lib/react-query/queriesAndMutations";
-import Loader  from "../../components/shared/Loader";
-import GridPostList  from "../../components/shared/GridPostList";
+import Loader from "../../components/shared/Loader";
+import GridPostList from "../../components/shared/GridPostList";
 
 interface StabBlockProps {
   value: string | number;
@@ -48,11 +48,17 @@ const Profile = () => {
         <div className="flex xl:flex-row flex-col max-xl:items-center flex-1 gap-7">
           <img
             src={
-              currentUser.imageUrl || "/assets/icons/profile-placeholder.svg"
+              currentUser.imageId
+                ? `https://cloud.appwrite.io/v1/storage/buckets/6782e52f0035d9eb5fc4/files/${currentUser.imageId}/view?project=6782604b00207ffe0075`
+                : "/assets/icons/profile-placeholder.svg"
             }
             alt="profile"
             className="w-28 h-28 lg:h-36 lg:w-36 rounded-full"
+            onError={(e) => {
+              e.currentTarget.src = "/assets/icons/profile-placeholder.svg";
+            }}
           />
+
           <div className="flex flex-col flex-1 justify-between md:mt-2">
             <div className="flex flex-col w-full">
               <h1 className="text-center xl:text-left h3-bold md:h1-semibold w-full">
@@ -64,9 +70,14 @@ const Profile = () => {
             </div>
 
             <div className="flex gap-8 mt-10 items-center justify-center xl:justify-start flex-wrap z-20">
-              <StatBlock value={currentUser.score} label={<><FaCoins style={{ color: 'gold', marginRight: '5px' }} /></>} />
-
-
+              <StatBlock
+                value={currentUser.score}
+                label={
+                  <>
+                    <FaCoins style={{ color: "gold", marginRight: "5px" }} />
+                  </>
+                }
+              />
             </div>
 
             <p className="small-medium md:base-medium text-center xl:text-left mt-7 max-w-screen-sm">
@@ -80,7 +91,8 @@ const Profile = () => {
                 to={`/update-profile/${currentUser.$id}`}
                 className={`h-12 bg-dark-4 px-5 text-light-1 flex-center gap-2 rounded-lg ${
                   user.id !== currentUser.$id && "hidden"
-                }`}>
+                }`}
+              >
                 <img
                   src={"/assets/icons/edit.svg"}
                   alt="edit"
@@ -107,7 +119,8 @@ const Profile = () => {
             to={`/profile/${id}`}
             className={`profile-tab rounded-l-lg ${
               pathname === `/profile/${id}` && "!bg-dark-3"
-            }`}>
+            }`}
+          >
             <img
               src={"/assets/icons/posts.svg"}
               alt="posts"
@@ -120,7 +133,8 @@ const Profile = () => {
             to={`/profile/${id}/liked-posts`}
             className={`profile-tab rounded-r-lg ${
               pathname === `/profile/${id}/liked-posts` && "!bg-dark-3"
-            }`}>
+            }`}
+          >
             <img
               src={"/assets/icons/like.svg"}
               alt="like"

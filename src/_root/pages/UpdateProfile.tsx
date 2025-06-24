@@ -15,13 +15,16 @@ import { useToast } from "../../hooks/use-toast";
 import { Textarea } from "../../components/ui/textarea";
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
-import  Loader from "../../components/shared/Loader";
+import Loader from "../../components/shared/Loader";
 
-import  ProfileUploader from "../../components/shared/ProfileUploader";
+import ProfileUploader from "../../components/shared/ProfileUploader";
 
 import { ProfileValidation } from "../../lib/validation/index";
 import { useUserContext } from "../../context/AuthContext";
-import { useGetUserById, useUpdateUser } from "@/lib/react-query/queriesAndMutations";
+import {
+  useGetUserById,
+  useUpdateUser,
+} from "@/lib/react-query/queriesAndMutations";
 
 const UpdateProfile = () => {
   const { toast } = useToast();
@@ -36,7 +39,7 @@ const UpdateProfile = () => {
       username: user.username,
       email: user.email,
       bio: user.bio || "",
-      score:user.score,
+      score: user.score,
     },
   });
 
@@ -61,7 +64,6 @@ const UpdateProfile = () => {
       file: value.file,
       imageUrl: currentUser.imageUrl,
       imageId: currentUser.imageId,
-      
     });
 
     if (!updatedUser) {
@@ -96,7 +98,8 @@ const UpdateProfile = () => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleUpdate)}
-            className="flex flex-col gap-7 w-full mt-4 max-w-5xl">
+            className="flex flex-col gap-7 w-full mt-4 max-w-5xl"
+          >
             <FormField
               control={form.control}
               name="file"
@@ -105,7 +108,11 @@ const UpdateProfile = () => {
                   <FormControl>
                     <ProfileUploader
                       fieldChange={field.onChange}
-                      mediaUrl={currentUser.imageUrl}
+                      mediaUrl={
+                        currentUser.imageId
+                          ? `https://cloud.appwrite.io/v1/storage/buckets/6782e52f0035d9eb5fc4/files/${currentUser.imageId}/view?project=6782604b00207ffe0075`
+                          : "/assets/icons/profile-placeholder.svg"
+                      }
                     />
                   </FormControl>
                   <FormMessage className="shad-form_message" />
@@ -186,13 +193,15 @@ const UpdateProfile = () => {
               <Button
                 type="button"
                 className="shad-button_dark_4"
-                onClick={() => navigate(-1)}>
+                onClick={() => navigate(-1)}
+              >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 className="shad-button_primary whitespace-nowrap"
-                disabled={isLoadingUpdate}>
+                disabled={isLoadingUpdate}
+              >
                 {isLoadingUpdate && <Loader />}
                 Update Profile
               </Button>
